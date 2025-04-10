@@ -3,125 +3,308 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Техническое задание на разработку корпоративного сайта Kammer Russland">
-    <meta name="author" content="Kammer Russland">
-    <title>Техническое задание | Kammer Russland</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <title>Техническое задание - Kammer Russland</title>
     <style>
-        /* Общие стили */
+        :root {
+            --primary: #003366;
+            --secondary: #009ee0;
+            --accent: #e6007e;
+            --light: #f5f5f5;
+            --dark: #212121;
+            --gray: #6c757d;
+            --success: #28a745;
+        }
+        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-
+        
         body {
-            font-family: 'Arial', sans-serif;
+            background-color: var(--light);
+            color: var(--dark);
             line-height: 1.6;
-            color: #333;
-            background-color: #f9f9f9;
         }
-
+        
         header {
-            background: #fff;
-            padding: 20px 0;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
-
+        
         .container {
-            width: 90%;
+            width: 100%;
             max-width: 1200px;
             margin: 0 auto;
+            padding: 0 1rem;
         }
-
-        .logo img {
-            max-width: 150px;
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
-
-        main {
-            padding: 40px 0;
+        
+        .logo {
+            height: 60px;
         }
-
-        h1, h2, h3 {
-            color: #2c3e50;
+        
+        .language-switcher {
+            display: flex;
+            gap: 1rem;
         }
-
-        h1 {
-            font-size: 2.5rem;
-            margin-bottom: 20px;
+        
+        .language-btn {
+            background: none;
+            border: none;
+            font-weight: 500;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 4px;
+            transition: all 0.2s;
         }
-
-        h2 {
-            font-size: 2rem;
-            margin-top: 30px;
-            margin-bottom: 15px;
+        
+        .language-btn:hover, .language-btn.active {
+            background-color: var(--secondary);
+            color: white;
         }
-
-        h3 {
-            font-size: 1.75rem;
-            margin-top: 25px;
-            margin-bottom: 10px;
-        }
-
-        p {
-            margin-bottom: 15px;
-        }
-
-        ul {
-            list-style: disc;
-            margin-left: 20px;
-            margin-bottom: 15px;
-        }
-
-        a {
-            color: #3498db;
-            text-decoration: none;
-        }
-
-        a:hover {
-            text-decoration: underline;
-        }
-
-        .section {
-            margin-bottom: 40px;
-        }
-
-        .btn {
-            display: inline-block;
-            padding: 10px 20px;
-            background-color: #3498db;
-            color: #fff;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
-        }
-
-        .btn:hover {
-            background-color: #2980b9;
-        }
-
-        footer {
-            background: #2c3e50;
-            color: #fff;
+        
+        .hero {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 4rem 0;
             text-align: center;
-            padding: 20px 0;
-            margin-top: 40px;
         }
-
+        
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .timeline {
+            display: flex;
+            margin: 2rem 0;
+            background-color: white;
+            border-radius: 8px;
+            padding: 1rem;
+            justify-content: space-between;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+        
+        .timeline-item {
+            text-align: center;
+            position: relative;
+            flex: 1;
+        }
+        
+        .timeline-item:not(:last-child)::after {
+            content: "";
+            position: absolute;
+            top: 1.5rem;
+            right: 0;
+            width: 80%;
+            height: 2px;
+            background-color: var(--secondary);
+        }
+        
+        .timeline-date {
+            background-color: var(--secondary);
+            color: white;
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .timeline-text {
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+        
+        main {
+            padding: 3rem 0;
+        }
+        
+        .section {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .section-header {
+            border-bottom: 2px solid var(--light);
+            padding-bottom: 1rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .section-title {
+            font-size: 1.5rem;
+            color: var(--primary);
+            font-weight: 600;
+        }
+        
+        .section-icon {
+            background-color: var(--light);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+        }
+        
+        h3 {
+            color: var(--secondary);
+            margin: 1.5rem 0 1rem;
+            font-size: 1.2rem;
+        }
+        
+        h4 {
+            font-weight: 600;
+            margin: 1rem 0 0.5rem;
+        }
+        
+        ul {
+            list-style-type: none;
+            margin-left: 1rem;
+        }
+        
+        ul li {
+            position: relative;
+            padding-left: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        ul li::before {
+            content: "•";
+            color: var(--secondary);
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+        
+        .tech-stack {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .tech-card {
+            background-color: var(--light);
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: all 0.3s;
+        }
+        
+        .tech-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .tech-card h4 {
+            color: var(--primary);
+            margin-top: 0;
+            margin-bottom: 1rem;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+        
+        .tech-list {
+            margin-bottom: 0;
+        }
+        
+        .performance-metrics {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .metric-card {
+            background-color: var(--light);
+            border-radius: 8px;
+            padding: 1rem;
+            flex: 1;
+            min-width: 200px;
+            text-align: center;
+        }
+        
+        .metric-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--success);
+            margin: 0.5rem 0;
+        }
+        
+        .metric-label {
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+        
+        .features {
+            margin-top: 2rem;
+        }
+        
+        .feature-group {
+            margin-bottom: 2rem;
+        }
+        
+        .feature-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+        
+        footer {
+            background-color: var(--primary);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+        }
+        
+        .footer-logo {
+            height: 50px;
+            margin-bottom: 1rem;
+            filter: brightness(0) invert(1);
+        }
+        
         @media (max-width: 768px) {
-            .logo img {
-                max-width: 120px;
+            .timeline {
+                flex-direction: column;
+                gap: 1rem;
             }
-
-            h1 {
-                font-size: 2rem;
+            
+            .timeline-item::after {
+                display: none;
             }
-
-            h2 {
-                font-size: 1.75rem;
+            
+            .tech-stack {
+                grid-template-columns: 1fr;
             }
-
-            h3 {
-                font-size: 1.5rem;
+            
+            .performance-metrics {
+                flex-direction: column;
             }
         }
     </style>
@@ -129,72 +312,254 @@
 <body>
     <header>
         <div class="container">
-            <div class="logo">
-                <img src="https://optim.tildacdn.com/tild3438-3066-4264-b134-613361393936/-/format/webp/Logo_Kammer_Russland.png.webp" alt="Логотип Kammer Russland">
+            <div class="header-content">
+                <img src="https://optim.tildacdn.com/tild3438-3066-4264-b134-613361393936/-/format/webp/Logo_Kammer_Russland.png.webp" alt="Kammer Russland Logo" class="logo">
+                <!-- <div class="language-switcher">
+                    <button class="language-btn active">RU</button>
+                    <button class="language-btn">DE</button>
+                    <button class="language-btn">EN</button>
+                </div> -->
             </div>
         </div>
     </header>
-
-    <main>
+    
+    <div class="hero">
         <div class="container">
             <h1>Техническое задание на разработку корпоративного сайта</h1>
-
-            <section class="section">
-                <h2>1. Общие сведения</h2>
-                <p><strong>Проект:</strong> Корпоративный сайт для Kammer Russland</p>
-                <p><strong>Сроки реализации:</strong> Март 2025 – Октябрь 2025 (8 месяцев)</p>
-                <p><strong>Целевые языки:</strong> Русский, немецкий, английский</p>
-                <p><strong>Текущий сайт:</strong> <a href="https://kammer-russland.ru">kammer-russland.ru</a></p>
-            </section>
-
-            <section class="section">
-                <h2>2. Технические требования</h2>
-
-                <h3>2.1. Технологический стек</h3>
-                <ul>
-                    <li><strong>Фронтенд:</strong> HTML5, CSS3, JavaScript (ES6+), Vue.js (версия 3.x), Axios, Webpack/Vite</li>
-                    <li><strong>Бэкенд:</strong> FastAPI (Python 3.9+), JWT аутентификация</li>
-                    <li><strong>База данных:</strong> PostgreSQL 14+ (основной вариант), MongoDB 5.0+, MySQL 8.0</li>
-                    <li><strong>Инфраструктура:</strong> Docker, Nginx, CI/CD через GitHub Actions</li>
-                </ul>
-
-                <h3>2.2. Функциональные требования</h3>
-                <h4>2.2.1. Публичная часть</h4>
-                <ul>
-                    <li>Главная страница: слайдер новостей, блок "Цифра дня", быстрый доступ к разделам, языковой переключатель.</li>
-                    <li>Новости: пагинация (12 новостей на страницу), фильтры, теги, кнопка "Поделиться".</li>
-                    <li>Инфографика: интерактивные графики (Chart.js), скачивание в PNG/PDF.</li>
-                    <li>Аналитика: категории статей, поиск, рекомендуемые материалы.</li>
-                    <li>О нас: интерактивная карта, галерея команды, история организации (таймлайн).</li>
-                </ul>
-
-                <h4>2.2.2. Административная панель</h4>
-                <ul>
-                    <li>Управление контентом: CRUD, TinyMCE 6.x, загрузка медиа, планирование публикаций.</li>
-                    <li>Пользователи: ролевая модель, журнал действий, двухфакторная аутентификация.</li>
-                    <li>SEO-инструменты: генератор метатегов, управление sitemap.xml, валидатор микроразметки.</li>
-                </ul>
-
-                <h3>2.3. Дизайн-требования</h3>
-                <ul>
-                    <li>Цветовая схема: основные цвета — синий (#3498db), белый (#fff), серый (#f9f9f9).</li>
-                    <li>UI-компоненты: модульная сетка, карточки с hover-эффектами, аккордеоны, кастомные элементы формы.</li>
-                </ul>
-
-                <h3>2.4. SEO и производительность</h3>
-                <ul>
-                    <li>Скорость загрузки: ≤2s (Desktop), ≤3s (Mobile).</li>
-                    <li>Lighthouse score ≥90.</li>
-                    <li>Lazy loading для изображений, оптимизация WebP, Schema.org разметка.</li>
-                </ul>
-            </section>
+            <p>Проект по созданию современного многоязычного корпоративного сайта для Российско-Германской внешнеторговой палаты</p>
         </div>
+    </div>
+    
+    <div class="container">
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-date">Март 2025</div>
+                <div class="timeline-text">Начало проекта</div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-date">Май 2025</div>
+                <div class="timeline-text">Дизайн и прототип</div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-date">Июль 2025</div>
+                <div class="timeline-text">Разработка</div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-date">Октябрь 2025</div>
+                <div class="timeline-text">Запуск сайта</div>
+            </div>
+        </div>
+    </div>
+    
+    <main class="container">
+        <section class="section">
+            <div class="section-header">
+                <h2 class="section-title">1. Общие сведения</h2>
+                <div class="section-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                </div>
+            </div>
+            <ul>
+                <li><strong>Проект:</strong> корпоративный сайт для Российско-Германской внешнеторговой палаты</li>
+                <li><strong>Сроки реализации:</strong> март 2025 – октябрь 2025 (8 месяцев)</li>
+                <li><strong>Целевые языки:</strong> русский, немецкий, английский</li>
+                <li><strong>Текущий сайт:</strong> kammer-russland.ru</li>
+            </ul>
+        </section>
+        
+        <section class="section">
+            <div class="section-header">
+                <h2 class="section-title">2. Технические требования</h2>
+                <div class="section-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3h18v18H3zM12 8v8m-4-4h8"></path></svg>
+                </div>
+            </div>
+            
+            <h3>2.1. Технологический стек</h3>
+            <div class="tech-stack">
+                <div class="tech-card">
+                    <h4>Фронтенд</h4>
+                    <ul class="tech-list">
+                        <li>HTML5, CSS3, JavaScript</li>
+                        <li>Vue.js</li>
+                    </ul>
+                </div>
+                
+                <div class="tech-card">
+                    <h4>Бэкенд</h4>
+                    <ul class="tech-list">
+                        <li>FastAPI (Python)</li>
+                        <li>Аутентификация: JWT</li>
+                        <li>PHP 8.0 (например)</li>
+                    </ul>
+                </div>
+                
+                <div class="tech-card">
+                    <h4>База данных</h4>
+                    <ul class="tech-list">
+                        <li>PostgreSQL (основной вариант)</li>
+                        <li>Альтернативы: MongoDB, MySQL 8.0</li>
+                    </ul>
+                </div>
+                
+                <div class="tech-card">
+                    <h4>Инфраструктура</h4>
+                    <ul class="tech-list">
+                        <li>CI/CD: GitHub Actions (как вариант)</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <h3>2.2. Функциональные требования</h3>
+            
+            <h4>2.2.1. Публичная часть</h4>
+            <div class="features">
+                <div class="feature-group">
+                    <div class="feature-title">Главная страница:</div>
+                    <ul>
+                        <li>Основной баннер в виде слайдера (3 слайда)</li>
+                        <li>Слайдер актуальных новостей, аналитических обзоров и раздела ВТП рядом</li>
+                        <li>Быстрый доступ к основным разделам</li>
+                        <li>Языковой переключатель</li>
+                    </ul>
+                </div>
+                
+                <div class="feature-group">
+                    <div class="feature-title">Новости:</div>
+                    <ul>
+                        <li>Пагинация (12 новостей на страницу)</li>
+                        <li>Фильтр по категориям</li>
+                        <li>Теги для новостей</li>
+                        <li>Кнопка "Поделиться"</li>
+                    </ul>
+                </div>
+                
+                <div class="feature-group">
+                    <div class="feature-title">Инфографика:</div>
+                    <ul>
+                        <li>Колекция инфографики с фильтрами по дате и темам</li>
+                    </ul>
+                </div>
+                
+                <div class="feature-group">
+                    <div class="feature-title">Аналитика:</div>
+                    <ul>
+                        <li>Колекция аналитических обзоров с фильтрами по дате и темам</li>
+                    </ul>
+                </div>
+                <div class="feature-group">
+                    <div class="feature-title">ВТП рядом:</div>
+                    <ul>
+                        <li>Колекция статей с фильтрами по дате и темам</li>
+                    </ul>
+                </div>
+                
+                <div class="feature-group">
+                    <div class="feature-title">О нас:</div>
+                    <ul>
+                        <li>Коллекция с сотрудниками компании (страница статическая)</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <h4>2.2.2. Административная панель</h4>
+            <div class="features">
+                <div class="feature-group">
+                    <div class="feature-title">Управление контентом:</div>
+                    <ul>
+                        <li>CRUD для всех типов контента</li>
+                        <li>Визуальный редактор (TinyMCE 6.x)</li>
+                        <li>Загрузка медиа с предпросмотром</li>
+                        <li>Планирование публикаций</li>
+                    </ul>
+                </div>
+                
+                <div class="feature-group">
+                    <div class="feature-title">Пользователи:</div>
+                    <ul>
+                        <li>Ролевая модель (админ, редактор, гость)</li>
+                        <li>Журнал действий</li>
+                        <li>Двухфакторная аутентификация (под вопросом)</li>
+                    </ul>
+                </div>
+                
+                <div class="feature-group">
+                    <div class="feature-title">SEO-инструменты:</div>
+                    <ul>
+                        <li>Генератор метатегов</li>
+                        <li>Управление sitemap.xml</li>
+                        <li>Валидатор микроразметки</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <h3>2.3. Дизайн-требования</h3>
+            <h4>2.3.1. Визуальный стиль</h4>
+            <ul>
+                <li><strong>Цветовая схема:</strong> Корпоративные цвета (дополняется)</li>
+                <li><strong>Типографика:</strong> Современная и читаемая (дополняется)</li>
+            </ul>
+            
+            <h4>2.3.2. UI-компоненты</h4>
+            <ul>
+                <li>Модульная сетка (12 колонок)</li>
+                <li>Карточки с hover-эффектами</li>
+                <li>Progress bar для загрузки</li>
+            </ul>
+            
+            <h3>2.4. SEO и производительность</h3>
+            <div class="performance-metrics">
+                <div class="metric-card">
+                    <div class="metric-label">Скорость загрузки (Desktop)</div>
+                    <div class="metric-value">≤2s</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Скорость загрузки (Mobile)</div>
+                    <div class="metric-value">≤3s</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Lighthouse score</div>
+                    <div class="metric-value">≥90</div>
+                </div>
+            </div>
+            
+            <ul style="margin-top: 1.5rem;">
+                <li>Lazy loading для изображений</li>
+                <li>Оптимизированные WebP изображения</li>
+                <li>Schema.org разметка для:
+                    <ul>
+                        <li>Организации</li>
+                        <li>Новостей</li>
+                        <li>Статей</li>
+                        <li>Людей</li>
+                    </ul>
+                </li>
+            </ul>
+        </section>
     </main>
-
+    
     <footer>
         <div class="container">
-            <p>&copy; 2025 Kammer Russland. Все права защищены.</p>
+            <img src="https://optim.tildacdn.com/tild3438-3066-4264-b134-613361393936/-/format/webp/Logo_Kammer_Russland.png.webp" alt="Kammer Russland Logo" class="footer-logo">
+            <p>© 2025 Российско-Германская ВТП. Все права защищены.</p>
         </div>
     </footer>
+    
+    <script>
+        // Simple language switcher functionality
+        const languageBtns = document.querySelectorAll('.language-btn');
+        
+        languageBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Remove active class from all buttons
+                languageBtns.forEach(b => b.classList.remove('active'));
+                // Add active class to clicked button
+                btn.classList.add('active');
+                
+                // Here we would normally implement language switching logic
+                // but for this example, we're just toggling the button state
+            });
+        });
+    </script>
 </body>
 </html>
