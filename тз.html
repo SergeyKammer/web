@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Техническое задание на разработку корпоративного сайта Kammer Russland">
+    <meta name="author" content="Kammer Russland">
+    <title>Техническое задание | Kammer Russland</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        /* Общие стили */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f9f9f9;
+        }
+
+        header {
+            background: #fff;
+            padding: 20px 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo img {
+            max-width: 150px;
+        }
+
+        main {
+            padding: 40px 0;
+        }
+
+        h1, h2, h3 {
+            color: #2c3e50;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            font-size: 2rem;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+
+        h3 {
+            font-size: 1.75rem;
+            margin-top: 25px;
+            margin-bottom: 10px;
+        }
+
+        p {
+            margin-bottom: 15px;
+        }
+
+        ul {
+            list-style: disc;
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: #fff;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #2980b9;
+        }
+
+        footer {
+            background: #2c3e50;
+            color: #fff;
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .logo img {
+                max-width: 120px;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            h2 {
+                font-size: 1.75rem;
+            }
+
+            h3 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <img src="https://optim.tildacdn.com/tild3438-3066-4264-b134-613361393936/-/format/webp/Logo_Kammer_Russland.png.webp" alt="Логотип Kammer Russland">
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <h1>Техническое задание на разработку корпоративного сайта</h1>
+
+            <section class="section">
+                <h2>1. Общие сведения</h2>
+                <p><strong>Проект:</strong> Корпоративный сайт для Kammer Russland</p>
+                <p><strong>Сроки реализации:</strong> Март 2025 – Октябрь 2025 (8 месяцев)</p>
+                <p><strong>Целевые языки:</strong> Русский, немецкий, английский</p>
+                <p><strong>Текущий сайт:</strong> <a href="https://kammer-russland.ru">kammer-russland.ru</a></p>
+            </section>
+
+            <section class="section">
+                <h2>2. Технические требования</h2>
+
+                <h3>2.1. Технологический стек</h3>
+                <ul>
+                    <li><strong>Фронтенд:</strong> HTML5, CSS3, JavaScript (ES6+), Vue.js (версия 3.x), Axios, Webpack/Vite</li>
+                    <li><strong>Бэкенд:</strong> FastAPI (Python 3.9+), JWT аутентификация</li>
+                    <li><strong>База данных:</strong> PostgreSQL 14+ (основной вариант), MongoDB 5.0+, MySQL 8.0</li>
+                    <li><strong>Инфраструктура:</strong> Docker, Nginx, CI/CD через GitHub Actions</li>
+                </ul>
+
+                <h3>2.2. Функциональные требования</h3>
+                <h4>2.2.1. Публичная часть</h4>
+                <ul>
+                    <li>Главная страница: слайдер новостей, блок "Цифра дня", быстрый доступ к разделам, языковой переключатель.</li>
+                    <li>Новости: пагинация (12 новостей на страницу), фильтры, теги, кнопка "Поделиться".</li>
+                    <li>Инфографика: интерактивные графики (Chart.js), скачивание в PNG/PDF.</li>
+                    <li>Аналитика: категории статей, поиск, рекомендуемые материалы.</li>
+                    <li>О нас: интерактивная карта, галерея команды, история организации (таймлайн).</li>
+                </ul>
+
+                <h4>2.2.2. Административная панель</h4>
+                <ul>
+                    <li>Управление контентом: CRUD, TinyMCE 6.x, загрузка медиа, планирование публикаций.</li>
+                    <li>Пользователи: ролевая модель, журнал действий, двухфакторная аутентификация.</li>
+                    <li>SEO-инструменты: генератор метатегов, управление sitemap.xml, валидатор микроразметки.</li>
+                </ul>
+
+                <h3>2.3. Дизайн-требования</h3>
+                <ul>
+                    <li>Цветовая схема: основные цвета — синий (#3498db), белый (#fff), серый (#f9f9f9).</li>
+                    <li>UI-компоненты: модульная сетка, карточки с hover-эффектами, аккордеоны, кастомные элементы формы.</li>
+                </ul>
+
+                <h3>2.4. SEO и производительность</h3>
+                <ul>
+                    <li>Скорость загрузки: ≤2s (Desktop), ≤3s (Mobile).</li>
+                    <li>Lighthouse score ≥90.</li>
+                    <li>Lazy loading для изображений, оптимизация WebP, Schema.org разметка.</li>
+                </ul>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Kammer Russland. Все права защищены.</p>
+        </div>
+    </footer>
+</body>
+</html>
