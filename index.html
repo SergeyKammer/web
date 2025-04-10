@@ -546,18 +546,17 @@
     </footer>
     
     <script>
-        // Simple language switcher functionality
+        
         const languageBtns = document.querySelectorAll('.language-btn');
         
         languageBtns.forEach(btn => {
             btn.addEventListener('click', () => {
-                // Remove active class from all buttons
+                
                 languageBtns.forEach(b => b.classList.remove('active'));
-                // Add active class to clicked button
+               
                 btn.classList.add('active');
                 
-                // Here we would normally implement language switching logic
-                // but for this example, we're just toggling the button state
+                
             });
         });
     </script>
