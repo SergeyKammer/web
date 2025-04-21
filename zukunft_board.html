@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>Анимированный барометр прогресса</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #e0eafc, #cfdef3);
+    }
+
+    .container {
+      width: 90%;
+      max-width: 900px;
+      background-color: white;
+      border-radius: 30px;
+      padding: 60px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+    }
+
+    h1 {
+      font-size: 36px;
+      text-align: center;
+      margin-bottom: 50px;
+      color: #333;
+    }
+
+    .barometer {
+      position: relative;
+      height: 80px;
+      border-radius: 40px;
+      background-color: #edf1f7;
+      overflow: hidden;
+      margin-bottom: 30px;
+      box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .barometer::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.3) 50%, transparent 100%);
+      z-index: 3;
+      animation: shine 2.5s infinite;
+    }
+
+    @keyframes shine {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+
+    .progress-paid,
+    .progress-planned {
+      position: absolute;
+      height: 100%;
+      transition: width 2s ease-in-out;
+    }
+
+    .progress-paid {
+      background: linear-gradient(90deg, #43e97b, #38f9d7);
+      box-shadow: 0 0 15px rgba(67, 233, 123, 0.4);
+      border-radius: 40px 0 0 40px;
+      z-index: 1;
+    }
+
+    .progress-planned {
+      background-color: #FFC107;
+      box-shadow: 0 0 15px rgba(255, 193, 7, 0.4);
+      z-index: 2;
+    }
+
+    .marker {
+      position: absolute;
+      width: 3px;
+      height: 15px;
+      background-color: rgba(0, 0, 0, 0.3);
+      bottom: 0;
+      transform: translateX(-50%);
+    }
+
+    .marker-25 { left: 25%; }
+    .marker-50 { left: 50%; }
+    .marker-75 { left: 75%; }
+
+    .stats {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 40px;
+    }
+
+    .stat-item {
+      text-align: center;
+      padding: 25px;
+      flex-grow: 1;
+      border-radius: 15px;
+      background-color: #f7f9fc;
+      margin: 0 8px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .stat-item:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    .stat-label {
+      font-size: 18px;
+      color: #666;
+      margin-bottom: 12px;
+    }
+
+    .stat-value {
+      font-size: 28px;
+      font-weight: bold;
+      color: #333;
+    }
+
+    .stat-percentage {
+      font-size: 16px;
+      color: #999;
+      margin-top: 8px;
+    }
+
+    .paid { color: #4CAF50; }
+    .planned { color: #FFC107; }
+    .remaining { color: #F44336; }
+
+    .pulse {
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    /* Tooltip Styles */
+    .stat-item[data-tooltip]:hover::after {
+      content: attr(data-tooltip);
+      position: absolute;
+      bottom: 110%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 0, 0.75);
+      color: #fff;
+      padding: 6px 12px;
+      border-radius: 8px;
+      white-space: nowrap;
+      font-size: 14px;
+      opacity: 1;
+      pointer-events: none;
+      transition: all 0.3s ease;
+    }
+
+    .barometer[data-tooltip]:hover::after {
+      content: attr(data-tooltip);
+      position: absolute;
+      top: -40px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 0, 0.75);
+      color: #fff;
+      padding: 6px 12px;
+      border-radius: 8px;
+      white-space: nowrap;
+      font-size: 14px;
+      opacity: 1;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Zukunft 2.0</h1>
+
+    <div class="barometer" data-tooltip="Полоса показывает прогресс по финансированию">
+      <div class="progress-paid"></div>
+      <div class="progress-planned"></div>
+      <div class="marker marker-25"></div>
+      <div class="marker marker-50"></div>
+      <div class="marker marker-75"></div>
+    </div>
+
+    <div class="stats">
+      <div class="stat-item" data-tooltip="Фактически оплаченная сумма">
+        <div class="stat-label">Bezahlt</div>
+        <div class="stat-value paid" id="paid-value">€0</div>
+        <div class="stat-percentage" id="paid-percentage">0%</div>
+      </div>
+      <div class="stat-item" data-tooltip="Сумма, обещанная к оплате">
+        <div class="stat-label">Angekündigt</div>
+        <div class="stat-value planned" id="planned-value">€0</div>
+        <div class="stat-percentage" id="planned-percentage">0%</div>
+      </div>
+      <div class="stat-item pulse" data-tooltip="Сумма, которую ещё необходимо собрать">
+        <div class="stat-label">Rest</div>
+        <div class="stat-value remaining" id="remaining-value">€0</div>
+        <div class="stat-percentage" id="remaining-percentage">100%</div>
+      </div>
+      <div class="stat-item" data-tooltip="Целевая сумма по сбору">
+        <div class="stat-label">Ziel</div>
+        <div class="stat-value">€1,500,000</div>
+        <div class="stat-percentage">100%</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const totalGoal = 1500000;
+      const paidAmount = 26000;
+      const plannedAmount = 100000;
+      const remainingAmount = totalGoal - paidAmount - plannedAmount;
+
+      const paidPercentage = (paidAmount / totalGoal) * 100;
+      const plannedPercentage = (plannedAmount / totalGoal) * 100;
+      const remainingPercentage = 100 - paidPercentage - plannedPercentage;
+
+      setTimeout(() => {
+        document.querySelector('.progress-paid').style.width = paidPercentage + '%';
+        document.querySelector('.progress-planned').style.width = plannedPercentage + '%';
+        document.querySelector('.progress-planned').style.left = paidPercentage + '%';
+
+        animateValue("paid-value", 0, paidAmount, 1000, "€");
+        animateValue("planned-value", 0, plannedAmount, 1000, "€");
+        animateValue("remaining-value", 0, remainingAmount, 1000, "€");
+
+        document.getElementById('paid-percentage').textContent = paidPercentage.toFixed(2) + '%';
+        document.getElementById('planned-percentage').textContent = plannedPercentage.toFixed(2) + '%';
+        document.getElementById('remaining-percentage').textContent = remainingPercentage.toFixed(2) + '%';
+      }, 500);
+
+      function animateValue(id, start, end, duration, prefix = "") {
+        const obj = document.getElementById(id);
+        let startTimestamp = null;
+        const step = (timestamp) => {
+          if (!startTimestamp) startTimestamp = timestamp;
+          const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+          obj.textContent = prefix + Math.floor(progress * (end - start) + start).toLocaleString('ru-RU');
+          if (progress < 1) {
+            window.requestAnimationFrame(step);
+          }
+        };
+        window.requestAnimationFrame(step);
+      }
+    });
+  </script>
+</body>
+</html>
