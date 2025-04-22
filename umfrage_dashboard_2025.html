@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Data Analytics Dashboard</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+  <style>
+    :root {
+      --primary-color: #4fd1c5;
+      --secondary-color: #667eea;
+      --text-color: #1a202c;
+      --light-text: #a0aec0;
+      --bg-gradient: linear-gradient(135deg, #1a1f2c, #2a2f45);
+      --accent-gradient: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Roboto, sans-serif;
+      color: var(--text-color);
+      background: var(--bg-gradient);
+      overflow: hidden;
+      position: relative;
+    }
+
+    #particles-js {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+
+    .dashboard-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 2rem;
+      gap: 1rem;
+    }
+
+    .dashboard-card {
+      width: 90vw;
+      height: 85vh;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(18px);
+      border-radius: 24px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    .dashboard-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .dashboard-header h1 {
+      font-size: 1.75rem;
+      background: var(--accent-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: bold;
+    }
+
+    .controls {
+      display: flex;
+      gap: 0.75rem;
+    }
+
+    .scroll-wrapper {
+      width: 100%;
+      height: 100%;
+      overflow-x: auto;
+      overflow-y: hidden;
+      border-radius: 16px;
+    }
+
+    .scroll-wrapper iframe {
+      min-width: 1000px;
+      height: 100%;
+      display: block;
+    }
+
+    .control-btn {
+      padding: 0.5rem 1.2rem;
+      border: none;
+      border-radius: 8px;
+      background: var(--accent-gradient);
+      color: white;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .control-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .frame-container {
+      flex: 1;
+      position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+    }
+
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    .footer {
+      margin-top: 1rem;
+      text-align: center;
+      color: var(--light-text);
+      font-size: 0.875rem;
+    }
+  </style>
+</head>
+<body>
+  <div id="particles-js"></div>
+
+  <div class="dashboard-container">
+    <div class="dashboard-card">
+      <div class="dashboard-header">
+        <h1>GK-Umfrage | 2025 | 1</h1>
+        <div class="controls">
+          <button class="control-btn" id="refresh-btn">Refresh</button>
+          <button class="control-btn" id="export-btn">Export</button>
+        </div>
+      </div>
+      <div class="frame-container">
+        <div class="scroll-wrapper">
+         <iframe id="data-frame"
+                src="https://docs.google.com/spreadsheets/d/e/2PACX-1vT01TF1zicU5mJj4IYGzDOFlcG1_Ni4e7nOB60vrJsahKrsmkOniujIsGOwraibvkcLe6PBNY2kKQr4/pubhtml?gid=751667593&amp;single=true&amp;widget=true&amp;headers=false"
+                onload="this.style.opacity = 1;"></iframe> 
+        </div>
+      </div>
+    </div>
+    <div class="footer">
+      Last updated: <span id="current-date"></span> | Data refreshes every 24 hours
+    </div>
+  </div>
+
+  <script>
+    // Set date
+    document.getElementById("current-date").textContent = new Date().toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+
+    // Refresh button
+    document.getElementById("refresh-btn").addEventListener("click", () => {
+      const iframe = document.getElementById("data-frame");
+      iframe.src = iframe.src;
+    });
+
+    // Export button (placeholder logic)
+    document.getElementById("export-btn").addEventListener("click", () => {
+      const wb = XLSX.utils.book_new();
+      const ws = XLSX.utils.aoa_to_sheet([
+        ["Demo Export"],
+        ["Column A", "Column B", "Column C"],
+        [1, 2, 3],
+      ]);
+      XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+      XLSX.writeFile(wb, "export.xlsx");
+    });
+
+    // Initialize particles.js
+    particlesJS("particles-js", {
+      particles: {
+        number: {
+          value: 60,
+          density: { enable: true, value_area: 800 },
+        },
+        color: { value: "#ffffff" },
+        shape: { type: "circle" },
+        opacity: {
+          value: 0.3,
+          random: true,
+        },
+        size: {
+          value: 4,
+          random: true,
+        },
+        line_linked: {
+          enable: true,
+          distance: 150,
+          color: "#ffffff",
+          opacity: 0.2,
+          width: 1,
+        },
+        move: {
+          enable: true,
+          speed: 1.5,
+          direction: "none",
+          random: false,
+          straight: false,
+          bounce: false,
+        },
+      },
+      interactivity: {
+        detect_on: "canvas",
+        events: {
+          onhover: { enable: true, mode: "grab" },
+          onclick: { enable: true, mode: "push" },
+          resize: true,
+        },
+        modes: {
+          grab: { distance: 140, line_linked: { opacity: 0.35 } },
+          push: { particles_nb: 4 },
+        },
+      },
+      retina_detect: true,
+    });
+  </script>
+</body>
+</html>
